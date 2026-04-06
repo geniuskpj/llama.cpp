@@ -2,9 +2,9 @@ name: CI
 
 on:
   workflow_dispatch: # allows manual triggering
-  push:
-    branches:
-      - master
+ # push:
+   # branches:
+     # - master
     paths: [
       '.github/workflows/build.yml',
       '.github/workflows/build-cmake-pkg.yml',
