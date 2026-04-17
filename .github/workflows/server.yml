@@ -14,7 +14,6 @@ on:
   #push:
    # branches:
    #   - master
-    
 
 env:
   LLAMA_LOG_COLORS: 1
