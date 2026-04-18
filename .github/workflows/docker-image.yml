@@ -64,7 +64,7 @@ jobs:
           REPO_OWNER="${GITHUB_REPOSITORY_OWNER@L}"  # to lower case
           REPO_NAME="${{ github.event.repository.name }}"
           PREFIX="ghcr.io/${REPO_OWNER}/${REPO_NAME}:"
-
+          ARCH_SUFFIX="${{ matrix.config.platforms == 'linux/arm64' && '-arm' || '' }}"
           # list all tags possible
           tags="${{ matrix.config.tag }}"
           for tag in $tags; do
@@ -73,10 +73,10 @@ jobs:
               else
                   TYPE="-$tag"
               fi
-              CACHETAGS="${PREFIX}buildcache${TYPE}"
-              FULLTAGS="${FULLTAGS:+$FULLTAGS,}${PREFIX}full${TYPE},${PREFIX}full${TYPE}-${{ steps.srctag.outputs.name }}"
-              LIGHTTAGS="${LIGHTTAGS:+$LIGHTTAGS,}${PREFIX}light${TYPE},${PREFIX}light${TYPE}-${{ steps.srctag.outputs.name }}"
-              SERVERTAGS="${SERVERTAGS:+$SERVERTAGS,}${PREFIX}server${TYPE},${PREFIX}server${TYPE}-${{ steps.srctag.outputs.name }}"
+              CACHETAGS="${PREFIX}buildcache${TYPE}${ARCH_SUFFIX}"
+              FULLTAGS="${FULLTAGS:+$FULLTAGS,}${PREFIX}full${TYPE},${PREFIX}full${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
+              LIGHTTAGS="${LIGHTTAGS:+$LIGHTTAGS,}${PREFIX}light${TYPE},${PREFIX}light${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
+              SERVERTAGS="${SERVERTAGS:+$SERVERTAGS,}${PREFIX}server${TYPE},${PREFIX}server${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
           done
           echo "cache_output_tags=$CACHETAGS" >> $GITHUB_OUTPUT
           echo "full_output_tags=$FULLTAGS" >> $GITHUB_OUTPUT
