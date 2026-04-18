@@ -20,24 +20,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN ARCH=$(uname -m) && \
-    if [ "${CUDA_DOCKER_ARCH}" != "default" ]; then \
-        export CMAKE_ARGS="-DCMAKE_CUDA_ARCHITECTURES=${CUDA_DOCKER_ARCH}"; \
+RUN if [ "${CUDA_DOCKER_ARCH}" != "default" ]; then \
+    export CMAKE_ARGS="-DCMAKE_CUDA_ARCHITECTURES=${CUDA_DOCKER_ARCH}"; \
     fi && \
-    # Logic to handle the armv9.2 compiler error
-    if [ "$ARCH" = "aarch64" ]; then \
-        CPU_VARIANTS="-DGGML_CPU_ALL_VARIANTS=OFF"; \
-    else \
-        CPU_VARIANTS="-DGGML_CPU_ALL_VARIANTS=ON"; \
-    fi && \
-    cmake -B build \
-        -DGGML_NATIVE=OFF \
-        -DGGML_CUDA=ON \
-        -DGGML_BACKEND_DL=ON \
-        $CPU_VARIANTS \
-        -DLLAMA_BUILD_TESTS=OFF \
-        ${CMAKE_ARGS} \
-        -DCMAKE_EXE_LINKER_FLAGS=-Wl,--allow-shlib-undefined . && \
+    cmake -B build -DGGML_NATIVE=OFF -DGGML_CUDA=ON -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON -DLLAMA_BUILD_TESTS=OFF ${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-Wl,--allow-shlib-undefined . && \
     cmake --build build --config Release -j$(nproc)
 
 RUN mkdir -p /app/lib && \
