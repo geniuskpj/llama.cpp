@@ -74,9 +74,9 @@ jobs:
                   TYPE="-$tag"
               fi
               CACHETAGS="${PREFIX}buildcache${TYPE}${ARCH_SUFFIX}"
-              FULLTAGS="${FULLTAGS:+$FULLTAGS,}${PREFIX}full${TYPE},${PREFIX}full${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
-              LIGHTTAGS="${LIGHTTAGS:+$LIGHTTAGS,}${PREFIX}light${TYPE},${PREFIX}light${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
-              SERVERTAGS="${SERVERTAGS:+$SERVERTAGS,}${PREFIX}server${TYPE},${PREFIX}server${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
+              FULLTAGS="${FULLTAGS:+$FULLTAGS,}${PREFIX}full${TYPE}${ARCH_SUFFIX},${PREFIX}full${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
+              LIGHTTAGS="${LIGHTTAGS:+$LIGHTTAGS,}${PREFIX}light${TYPE}${ARCH_SUFFIX},${PREFIX}light${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
+              SERVERTAGS="${SERVERTAGS:+$SERVERTAGS,}${PREFIX}server${TYPE}${ARCH_SUFFIX},${PREFIX}server${TYPE}-${{ steps.srctag.outputs.name }}${ARCH_SUFFIX}"
           done
           echo "cache_output_tags=$CACHETAGS" >> $GITHUB_OUTPUT
           echo "full_output_tags=$FULLTAGS" >> $GITHUB_OUTPUT
