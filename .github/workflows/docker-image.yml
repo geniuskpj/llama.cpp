@@ -34,7 +34,7 @@ jobs:
         config:
           # Multi-stage build
           - { tag: "cuda cuda12", dockerfile: ".devops/cuda.Dockerfile", platforms: "linux/amd64", full: false, light: false, server: true, free_disk_space: true, runs_on: "ubuntu-24.04", cuda_version: "12.4.0", ubuntu_version: "22.04" }
-          - { tag: "cuda cuda12", dockerfile: ".devops/cuda.Dockerfile", platforms: "linux/arm64", full: false, light: false, server: true, free_disk_space: true, runs_on: "ubuntu-24.04-arm", cuda_version: "12.6.0", ubuntu_version: "22.04" }
+          - { tag: "cuda cuda12", dockerfile: ".devops/cuda.Dockerfile", platforms: "linux/arm64", full: false, light: false, server: true, free_disk_space: true, runs_on: "ubuntu-24.04-arm", cuda_version: "12.6.1", ubuntu_version: "22.04", cuda_docker_arch: "sm_87" }
     steps:
       - name: Check out the repo
         uses: actions/checkout@v6
@@ -115,6 +115,7 @@ jobs:
           build-args: |
             ${{ matrix.config.ubuntu_version && format('UBUNTU_VERSION={0}', matrix.config.ubuntu_version) || '' }}
             ${{ matrix.config.cuda_version && format('CUDA_VERSION={0}', matrix.config.cuda_version) || '' }}
+            ${{ matrix.config.cuda_docker_arch && format('CUDA_DOCKER_ARCH={0}', matrix.config.cuda_docker_arch) || '' }}
           cache-from: type=registry,ref=${{ steps.tag.outputs.cache_output_tags }}
           cache-to: type=registry,ref=${{ steps.tag.outputs.cache_output_tags }},mode=max
 

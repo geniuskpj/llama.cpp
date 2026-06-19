@@ -13,7 +13,7 @@ ARG APP_REVISION=N/A
 
 FROM ${BASE_CUDA_DEV_CONTAINER} AS build
 
-ARG GCC_VERSION
+# ARG GCC_VERSION
 # CUDA architecture to build for (defaults to all supported archs)
 ARG CUDA_DOCKER_ARCH=default
 
