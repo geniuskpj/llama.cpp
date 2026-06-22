@@ -32,7 +32,7 @@ jobs:
       matrix:  
         config:  
           # Jetson L4T JetPack r36.4.0  
-          - { tag: "jetson l4t-r36.4.0", dockerfile: ".devops/jetson.Dockerfile", platforms: "linux/arm64", full: false, light: false, server: true, free_disk_space: false, runs_on: "ubuntu-24.04" }
+          - { tag: "jetson l4t-r36.4.0", dockerfile: ".devops/jetson.Dockerfile", platforms: "linux/arm64", full: false, light: false, server: true, free_disk_space: false, runs_on: "ubuntu-24.04-arm" }
 
     steps:  
       - name: Check out the repo  
