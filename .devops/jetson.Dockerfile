@@ -23,7 +23,7 @@ RUN npm ci
 COPY tools/ui/ ./
 RUN LLAMA_BUILD_NUMBER="$APP_VERSION" npm run build
 
-FROM ${BASE_CUDA_DEV_CONTAINER} AS build
+FROM ${BASE_JETPACK_CONTAINER} AS build
 
 # ARG GCC_VERSION
 # CUDA architecture to build for (defaults to all supported archs)
@@ -60,7 +60,7 @@ RUN mkdir -p /app/full \
     && cp .devops/tools.sh /app/full/tools.sh
 
 ## Base image
-FROM ${BASE_CUDA_RUN_CONTAINER} AS base
+FROM ${BASE_JETPACK_CONTAINER} AS base
 
 ARG BUILD_DATE=N/A
 ARG APP_VERSION=N/A
